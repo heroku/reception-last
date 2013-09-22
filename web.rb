@@ -1,10 +1,17 @@
 require 'sinatra'
 require 'sequel'
+require 'date'
 
 DB = Sequel.connect ENV['DATABASE_URL']
 class App < Sinatra::Application
   before do
 #    halt(403) unless request.env['bouncer.email']
+  end
+
+  helpers do
+    def h(str)
+      ERB::Util.html_escape(str)
+    end
   end
 
   get '/' do
@@ -38,6 +45,10 @@ class App < Sinatra::Application
       group by 1
       order by 1 asc;
     SQL
+
+    @day = params[:day] || Date.today.to_s
+    @day_guests = DB['select * from guests where ?::date = visiting_on::date', @day].all
+
     erb :list
   end
 end
@@ -51,6 +62,7 @@ __END__
   <style>
     body { font-family: monospace; }
     label { display: inline-block; width: 9em;}
+    td { border-left: 1px solid grey; border-right: 1px solid grey }
   </style>
 </head>
 <body>
@@ -84,8 +96,25 @@ __END__
 @@ list
 <h1>Overview</h1>
 <% @overview.each do |day| %>
-  <%= "<b>#{day[:visiting_on].strftime('%a %b %d')}:</b> #{day[:total]} visiting (#{day[:lunch]} for lunch)" %>
+  <%= "<b><a href='?day=#{day[:visiting_on]}'>#{day[:visiting_on].strftime('%a %b %d')}</a>:</b> #{day[:total]} visiting (#{day[:lunch]} for lunch)" %>
   <br>
 <% end %>
+
+<h1><%=h @day %></h1>
+<table>
+<tr><th>guest</th><th>for</th><th>lunch/nda</th><th>notify</th></tr>
+<% @day_guests.each do |g| %>
+  <tr>
+    <td><%=h g[:guest_name] %></td>
+    <td><%=h g[:herokai_name] %></td>
+    <td> <%= "lunch" if g[:lunch] %> <%= "nda" if g[:nda] %></td>
+    <td>
+      <%= "hipchat" if g[:notify_hipchat] %>
+      <%= "gchat" if g[:notify_gchat] %>
+      <%= "sms #{g[:notify_sms]}" if g[:notify_gchat] %>
+    </td>
+  </tr>
+<% end %>
+</table>
 
 
