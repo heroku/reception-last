@@ -11,6 +11,5 @@ create table guests (
   notify_sms       text                          ,
   notes            text                          ,
   created_at       timestamptz   default now()   ,
-  arrived_at       timestamptz
 );
 

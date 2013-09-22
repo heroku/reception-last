@@ -64,7 +64,8 @@ __END__
   <style>
     body { font-family: monospace; }
     label { display: inline-block; width: 9em;}
-    td { border-left: 1px solid grey; border-right: 1px solid grey }
+    td { border-right: 1px solid grey; padding: 0 1em; }
+    td.last { border-right: 0 }
   </style>
 </head>
 <body>
@@ -110,7 +111,7 @@ __END__
     <td><%=h g[:guest_name] %></td>
     <td> <%= "lunch" if g[:lunch] %> <%= "nda" if g[:nda] %></td>
     <td><%=h g[:herokai_name] %></td>
-    <td>
+    <td class='last'>
       <%= "hipchat" if g[:notify_hipchat] %>
       <%= "gchat" if g[:notify_gchat] %>
       <%= "sms #{g[:notify_sms]}" if g[:notify_gchat] %>
