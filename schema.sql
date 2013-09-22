@@ -10,6 +10,6 @@ create table guests (
   notify_gchat     boolean       default false   ,
   notify_sms       text                          ,
   notes            text                          ,
-  created_at       timestamptz   default now()   ,
+  created_at       timestamptz   default now()
 );
 

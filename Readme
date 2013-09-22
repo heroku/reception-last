@@ -1,0 +1,5 @@
+A simple guest tracking app for vibe
+
+## Setup
+Required env vars: DATABASE_URL, HEROKU_OAUTH_ID, HEROKU_OAUTH_SECRET
+then `createdb guest; psql guest -f schema.sql`
