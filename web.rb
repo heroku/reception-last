@@ -14,15 +14,31 @@ class App < Sinatra::Application
   post '/guest' do
     params.inspect
     guest = params.select {|(k,v)| %w(guest_name visiting_on lunch nda herokai_name notify_hipchat notify_gchat notify_sms notes).include? k }
-p guest
     guest.reject! {|k| v = guest[k]; v.nil? || v.empty?}
-p guest
     begin
       record = DB[:guests] << guest
     rescue => e
       return "Couldn't create guest\n#{e.message.split("\n").first}"
     end
-    record.inspect
+    "thanks"
+  end
+
+  get "/guest" do
+    redirect '/'
+  end
+
+  get "/list" do
+    @overview = DB[<<-SQL].all
+      select
+        v::date as visiting_on,
+        count(visiting_on) as total,
+        count(case lunch when true then true end) as lunch
+      from generate_series(now(), now() + '2 weeks'::interval, '1 day') as v
+      left outer join guests on v::date = visiting_on::date
+      group by 1
+      order by 1 asc;
+    SQL
+    erb :list
   end
 end
 
@@ -63,4 +79,13 @@ __END__
   </fieldset>
   <input type="submit">
 </form>
+
+
+@@ list
+<h1>Overview</h1>
+<% @overview.each do |day| %>
+  <%= "<b>#{day[:visiting_on].strftime('%a %b %d')}:</b> #{day[:total]} visiting (#{day[:lunch]} for lunch)" %>
+  <br>
+<% end %>
+
 
