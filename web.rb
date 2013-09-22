@@ -69,6 +69,7 @@ __END__
   </style>
 </head>
 <body>
+<a href="/">new guest</a> | <a href='/list'>guest list</a>
 <%= yield %>
 </body>
 </html>
