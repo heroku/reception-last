@@ -106,17 +106,18 @@ __END__
 
 <h1><%=h @day %></h1>
 <table>
-<tr><th>guest</th><th>lunch/nda</th><th>for</th><th>notify</th></tr>
+<tr><th>guest</th><th>lunch/nda</th><th>for</th><th>notify</th><th>notes</th></tr>
 <% @day_guests.each do |g| %>
   <tr>
     <td><%=h g[:guest_name] %></td>
     <td> <%= "lunch" if g[:lunch] %> <%= "nda" if g[:nda] %></td>
     <td><%=h g[:herokai_name] %></td>
-    <td class='last'>
+    <td>
       <%= "hipchat" if g[:notify_hipchat] %>
       <%= "gchat" if g[:notify_gchat] %>
       <%= "sms #{g[:notify_sms]}" if g[:notify_gchat] %>
     </td>
+    <td class='last'><%=h g[:notes] %></td>
   </tr>
 <% end %>
 </table>
