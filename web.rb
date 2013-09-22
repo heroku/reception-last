@@ -5,7 +5,9 @@ require 'date'
 DB = Sequel.connect ENV['DATABASE_URL']
 class App < Sinatra::Application
   before do
-#    halt(403) unless request.env['bouncer.email']
+    unless DISABLE_AUTH
+      halt(403) unless request.env['bouncer.email']
+    end
   end
 
   helpers do
@@ -102,12 +104,12 @@ __END__
 
 <h1><%=h @day %></h1>
 <table>
-<tr><th>guest</th><th>for</th><th>lunch/nda</th><th>notify</th></tr>
+<tr><th>guest</th><th>lunch/nda</th><th>for</th><th>notify</th></tr>
 <% @day_guests.each do |g| %>
   <tr>
     <td><%=h g[:guest_name] %></td>
-    <td><%=h g[:herokai_name] %></td>
     <td> <%= "lunch" if g[:lunch] %> <%= "nda" if g[:nda] %></td>
+    <td><%=h g[:herokai_name] %></td>
     <td>
       <%= "hipchat" if g[:notify_hipchat] %>
       <%= "gchat" if g[:notify_gchat] %>
