@@ -27,9 +27,9 @@ class App < Sinatra::Application
     begin
       record = DB[:guests] << guest
     rescue => e
-      return "Couldn't create guest\n#{e.message.split("\n").first}"
+      return erb "<br>Couldn't create guest\n#{h e.message.split("\n").first}"
     end
-    "thanks"
+    erb "<br>thanks"
   end
 
   get "/guest" do
