@@ -41,7 +41,7 @@ class App < Sinatra::Application
       select
         v::date as visiting_on,
         count(visiting_on) as total,
-        count(case lunch when true then true end) as lunch
+        count(nullif(lunch, false)) as lunch
       from generate_series(now(), now() + '2 weeks'::interval, '1 day') as v
       left outer join guests on v::date = visiting_on::date
       group by 1
