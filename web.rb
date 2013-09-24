@@ -42,7 +42,7 @@ class App < Sinatra::Application
     guest
   end
 
-  post '/guest' do
+  post '/guests' do
     guest = guest_hash_from_params(params)
     begin
       record = DB[:guests] << guest
@@ -53,11 +53,11 @@ class App < Sinatra::Application
     erb "thanks"
   end
 
-  get "/guest" do
+  get "/guests" do
     redirect '/'
   end
 
-  get "/guest/:id" do |id|
+  get "/guests/:id" do |id|
     begin
       @guest = DB[:guests].where(id: id).first
     rescue
@@ -67,13 +67,13 @@ class App < Sinatra::Application
     erb :editguest
   end
 
-  put "/guesb/:id" do |id|
+  put "/guests/:id" do |id|
     guest = guest_hash_from_params(params)
     p DB[:guests].where(id: id).update(guest)
     erb "Updated"
   end
 
-  delete "/guest/:id" do |id|
+  delete "/guests/:id" do |id|
     p DB[:guests].where(id: id).delete
     erb "Deleted"
   end
@@ -108,6 +108,8 @@ __END__
     label { display: inline-block; width: 9em;}
     td { border-right: 1px solid grey; padding: 0 1em; }
     td.last { border-right: 0 }
+    .submit { background: #0c0; color: #fff; font-weight: bold; }
+    .delete { background: #c00; color: #fff; }
   </style>
 </head>
 <body>
@@ -118,23 +120,21 @@ __END__
 
 @@ index
 <h1>New Guest</h1>
-<form action="/guest" method="post">
+<form action="/guests" method="post">
   <%= erb :guestform %>
-  <input type="submit">
 </form>
 
 @@ editguest
 <h1>Edit Guest</h1>
-<form action="/guest/<%= @guest[:id] %>" method="post">
+<form action="/guests/<%= @guest[:id] %>" method="post">
   <input type='hidden' name='_method' value='put'>
   <%= erb :guestform %>
-  <input type="submit" value='update'>
 </form>
 
 <h2>Delete Guest</h2>
-<form action="/guest/<%= @guest[:id] %>" method="post">
+<form action="/guests/<%= @guest[:id] %>" method="post">
   <input type='hidden' name='_method' value='delete'>
-  <input type='submit' value='delete guest'>
+  <input type='submit' value='delete guest' class='delete'>
 <form>
 
 @@ guestform
@@ -152,7 +152,8 @@ __END__
   </fieldset>
   <fieldset>
     <label>notes:</label><br>
-    <textarea name="notes"><%= @guest[:notes] if @guest%></textarea><br>
+    <textarea name="notes"><%=h @guest[:notes] if @guest%></textarea><br>
+    <input type="submit" class='submit'>
   </fieldset>
 
 
@@ -168,7 +169,7 @@ __END__
 <tr><th>guest</th><th>lunch/nda</th><th>for</th><th>notify</th><th>notes</th></tr>
 <% @day_guests.each do |g| %>
   <tr>
-    <td><%=h g[:guest_name] %></td>
+    <td><a href="/guests/<%= g[:id] %>"><%=h g[:guest_name] %></a></td>
     <td> <%= "lunch" if g[:lunch] %> <%= "nda" if g[:nda] %></td>
     <td><%=h g[:herokai_name] %></td>
     <td>
