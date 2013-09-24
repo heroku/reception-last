@@ -46,10 +46,11 @@ class App < Sinatra::Application
     guest = guest_hash_from_params(params)
     begin
       record = DB[:guests] << guest
+      p record
     rescue => e
-      return erb "<br>Couldn't create guest\n#{h e.message.split("\n").first}"
+      return erb "Couldn't create guest\n#{h e.message.split("\n").first}"
     end
-    erb "<br>thanks"
+    erb "thanks"
   end
 
   get "/guest" do
@@ -62,13 +63,19 @@ class App < Sinatra::Application
     rescue
      halt(404)
     end
+    halt(404, erb('not found')) unless @guest
     erb :editguest
   end
 
-  put "/guest/:id" do |id|
+  put "/guesb/:id" do |id|
     guest = guest_hash_from_params(params)
     p DB[:guests].where(id: id).update(guest)
-    erb "<br> Updated"
+    erb "Updated"
+  end
+
+  delete "/guest/:id" do |id|
+    p DB[:guests].where(id: id).delete
+    erb "Deleted"
   end
 
   get "/list" do
@@ -104,7 +111,7 @@ __END__
   </style>
 </head>
 <body>
-<a href="/">new guest</a> | <a href='/list'>guest list</a>
+<a href="/">new guest</a> | <a href='/list'>guest list</a><br>
 <%= yield %>
 </body>
 </html>
@@ -123,6 +130,12 @@ __END__
   <%= erb :guestform %>
   <input type="submit" value='update'>
 </form>
+
+<h2>Delete Guest</h2>
+<form action="/guest/<%= @guest[:id] %>" method="post">
+  <input type='hidden' name='_method' value='delete'>
+  <input type='submit' value='delete guest'>
+<form>
 
 @@ guestform
   <fieldset>
