@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/heroku/heroku-bouncer.git
-  revision: 75623a0bc8ef8f8eda26fe7bd2f4d56f6046f061
+  revision: e72f4ff728e22bbde959d57b16513e8901b7d636
   branch: scopes
   specs:
     heroku-bouncer (0.3.3)
