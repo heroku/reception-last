@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/heroku/heroku-bouncer.git
-  revision: 5a8b8b4c1ebac3e59183068846ebb95dcc926b80
+  revision: 75623a0bc8ef8f8eda26fe7bd2f4d56f6046f061
   branch: scopes
   specs:
     heroku-bouncer (0.3.3)
@@ -20,7 +20,7 @@ GEM
     httpauth (0.2.0)
     jwt (0.1.8)
       multi_json (>= 1.5)
-    kgio (2.8.0)
+    kgio (2.8.1)
     multi_json (1.8.0)
     multipart-post (1.2.0)
     oauth2 (0.8.1)
@@ -38,12 +38,12 @@ GEM
     omniauth-oauth2 (1.1.1)
       oauth2 (~> 0.8.0)
       omniauth (~> 1.0)
-    pg (0.16.0)
+    pg (0.17.0)
     rack (1.5.2)
     rack-protection (1.5.0)
       rack
     raindrops (0.12.0)
-    sequel (4.1.1)
+    sequel (4.2.0)
     sinatra (1.4.3)
       rack (~> 1.4)
       rack-protection (~> 1.4)
