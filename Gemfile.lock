@@ -1,3 +1,15 @@
+GIT
+  remote: https://github.com/heroku/heroku-bouncer.git
+  revision: 5a8b8b4c1ebac3e59183068846ebb95dcc926b80
+  branch: scopes
+  specs:
+    heroku-bouncer (0.3.3)
+      encrypted_cookie (~> 0.0.4)
+      faraday (~> 0.8)
+      multi_json (~> 1.0)
+      omniauth-heroku (>= 0.1.0)
+      sinatra (~> 1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -5,17 +17,11 @@ GEM
     faraday (0.8.8)
       multipart-post (~> 1.2.0)
     hashie (2.0.5)
-    heroku-bouncer (0.3.2)
-      encrypted_cookie (~> 0.0.4)
-      faraday (~> 0.8)
-      multi_json (~> 1.0)
-      omniauth-heroku (>= 0.1.0)
-      sinatra (~> 1.0)
     httpauth (0.2.0)
     jwt (0.1.8)
       multi_json (>= 1.5)
     kgio (2.8.0)
-    multi_json (1.7.9)
+    multi_json (1.8.0)
     multipart-post (1.2.0)
     oauth2 (0.8.1)
       faraday (~> 0.8)
@@ -52,7 +58,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  heroku-bouncer
+  heroku-bouncer!
   pg
   sequel
   sinatra
