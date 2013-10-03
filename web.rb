@@ -175,7 +175,7 @@ __END__
     <td>
       <%= "hipchat" if g[:notify_hipchat] %>
       <%= "gchat" if g[:notify_gchat] %>
-      <%= "sms #{h g[:notify_sms]}" if g[:notify_sms] %>
+      <%= "sms #{h g[:notify_sms]}" if g[:notify_sms] && ! g[:notify_sms].empty? %>
     </td>
     <td class='last'><%=h g[:notes] %></td>
   </tr>
