@@ -6,4 +6,3 @@ gem "unicorn"
 gem "heroku-bouncer", git: "https://github.com/heroku/heroku-bouncer.git", branch: "scopes"
 gem "pg"
 gem "sequel"
-
