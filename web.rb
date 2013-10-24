@@ -160,7 +160,12 @@ __END__
 @@ list
 <h1>Overview</h1>
 <% @overview.each do |day| %>
-  <%= "<b><a href='?day=#{day[:visiting_on]}'>#{day[:visiting_on].strftime('%a %b %d')}</a>:</b> #{day[:total]} visiting (#{day[:lunch]} for lunch)" %>
+  <%= "<b><a href='?day=#{day[:visiting_on]}'>#{day[:visiting_on].strftime('%a %b %d')}</a>:</b>" %>
+  <% if day[:total] > 0 %>
+    <%= "#{day[:total]} visiting (#{day[:lunch]} for lunch)" %>
+  <% else %>
+    <%= "<small>nobody</small>" %>
+  <% end %>
   <br>
 <% end %>
 
