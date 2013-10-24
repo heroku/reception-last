@@ -104,12 +104,13 @@ __END__
 <head>
   <title>heroku guests</title>
   <style>
-    body { font-family: monospace; }
+    body { font-family: monospace; background-color: #F2F2F2; color: #1A1A1A }
     label { display: inline-block; width: 9em;}
     td { border-right: 1px solid grey; padding: 0 1em; }
     td.last { border-right: 0 }
-    .submit { background: #0c0; color: #fff; font-weight: bold; }
-    .delete { background: #c00; color: #fff; }
+    .submit { background: #B4D7BF; font-weight: bold; }
+    .delete { background: #F08080; }
+    small { color: #404040; }
   </style>
 </head>
 <body>
