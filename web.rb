@@ -114,6 +114,7 @@ __END__
     .delete { background: #F08080; }
     small { color: #404040; }
   </style>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
 </head>
 <body>
 <a href="/">new guest</a> | <a href='/list'>guest list</a><br>
@@ -174,7 +175,7 @@ __END__
 
 <h1><%=h @day %></h1>
 <table>
-<tr><th>guest</th><th>lunch/nda</th><th>for</th><th>notify</th><th>notes</th></tr>
+<tr><th>guest</th><th>lunch/nda</th><th>for</th><th>notify</th><th>added</th><th>notes</th></tr>
 <% @day_guests.each do |g| %>
   <tr>
     <td><a href="/guests/<%= g[:id] %>"><%=h g[:guest_name] %></a></td>
@@ -185,7 +186,15 @@ __END__
       <%= "gchat" if g[:notify_gchat] %>
       <%= "sms #{h g[:notify_sms]}" if g[:notify_sms] && ! g[:notify_sms].empty? %>
     </td>
+    <td class='date'><%=h g[:created_at] %></td>
     <td class='last'><%=h g[:notes] %></td>
   </tr>
 <% end %>
 </table>
+<script>
+  var dates = document.getElementsByClassName('date');
+  for(var i=0; i < dates.length; i++) {
+    var el = dates[i];
+    el.innerText = moment(el.innerText).calendar();
+  }
+</script>
