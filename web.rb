@@ -8,6 +8,13 @@ class App < Sinatra::Application
     unless DISABLE_AUTH
       halt(403) unless request.env['bouncer.email']
     end
+
+    proto = request.env["HTTP_X_FORWARDED_PROTO"]
+    host  = request.env["HTTP_HOST"]
+    uri   = request.env["REQUEST_URI"]
+    if settings.production? && (proto != "https" || host != "reception.heroku.com")
+      redirect "https://reception.heroku.com#{uri}"
+    end
   end
 
   helpers do
