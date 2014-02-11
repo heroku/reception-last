@@ -193,7 +193,9 @@ __END__
       <%= "gchat" if g[:notify_gchat] %>
       <%= "sms #{h g[:notify_sms]}" if g[:notify_sms] && ! g[:notify_sms].empty? %>
     </td>
-    <td class='date'><%=h g[:created_at] %></td>
+    <td class='date' title="<%=h g[:created_at] %>">
+      <%=h g[:created_at] %>
+    </td>
     <td class='last'><%=h g[:notes] %></td>
   </tr>
 <% end %>
