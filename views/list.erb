@@ -1,0 +1,38 @@
+<h1>Overview</h1>
+<% @overview.each do |day| %>
+  <%= "<b><a href='?day=#{day[:visiting_on]}'>#{day[:visiting_on].strftime('%a %b %d')}</a>:</b>" %>
+  <% if day[:total] > 0 %>
+    <%= "#{day[:total]} visiting (#{day[:lunch]} for lunch)" %>
+  <% else %>
+    <%= "<small>nobody</small>" %>
+  <% end %>
+  <br>
+<% end %>
+
+<h1><%=h @day %></h1>
+<table>
+<tr><th>guest</th><th>lunch/nda</th><th>for</th><th>notify</th><th>added</th><th>notes</th></tr>
+<% @day_guests.each do |g| %>
+  <tr>
+    <td><a href="/guests/<%= g[:id] %>"><%=h g[:guest_name] %></a></td>
+    <td> <%= "lunch" if g[:lunch] %> <%= "nda" if g[:nda] %></td>
+    <td><%=h g[:herokai_name] %></td>
+    <td>
+      <%= "hipchat" if g[:notify_hipchat] %>
+      <%= "gchat" if g[:notify_gchat] %>
+      <%= "sms #{h g[:notify_sms]}" if g[:notify_sms] && ! g[:notify_sms].empty? %>
+    </td>
+    <td class='date' title="<%=h g[:created_at] %>">
+      <%=h g[:created_at] %>
+    </td>
+    <td class='last'><%=h g[:notes] %></td>
+  </tr>
+<% end %>
+</table>
+<script>
+  var dates = document.getElementsByClassName('date');
+  for(var i=0; i < dates.length; i++) {
+    var el = dates[i];
+    el.innerText = moment(el.innerText).calendar();
+  }
+</script>
