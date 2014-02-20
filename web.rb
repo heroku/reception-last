@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'sequel'
 require 'date'
+Sequel.extension(:core_extensions, :pg_range, :pg_range_ops)
 
 DB = Sequel.connect ENV['DATABASE_URL']
 class App < Sinatra::Application
@@ -42,22 +43,17 @@ class App < Sinatra::Application
     erb :index
   end
 
-  FIELDS = %w(guest_name visiting_on lunch nda herokai_name notify_hipchat notify_gchat notify_sms notes)
+  FIELDS = %w(guest_name lunch nda herokai_name notify_hipchat notify_gchat notify_sms notes)
   def guest_hash_from_params(params)
     guest = {}
     FIELDS.each {|field| guest[field] = params[field] }
-    guest
-  end
 
-  post '/guests' do
-    guest = guest_hash_from_params(params)
-    begin
-      record = DB[:guests] << guest
-      p record
-    rescue => e
-      return erb "Couldn't create guest\n#{h e.message.split("\n").first}"
-    end
-    erb "thanks"
+    v_on = params['visiting_on']
+    v_until = params['visiting_until']
+    v_until = v_on if v_until.nil? || v_until.empty?
+    guest['visiting_range'] = "[#{v_on}, #{v_until}]"
+
+    guest
   end
 
   get "/guests" do
@@ -67,6 +63,8 @@ class App < Sinatra::Application
   get "/guests/:id" do |id|
     begin
       @guest = DB[:guests].where(id: id).first
+      @guest[:visiting_on] = @guest[:visiting_range].begin
+      @guest[:visiting_until] = @guest[:visiting_range].end - 1 # dateranges come out of the database as [), but we store with []
     rescue
      halt(404)
     end
@@ -74,9 +72,23 @@ class App < Sinatra::Application
     erb :editguest
   end
 
+  post '/guests' do
+    guest = guest_hash_from_params(params)
+    begin
+      record = DB[:guests] << guest
+    rescue => e
+      return erb "Couldn't create guest<br><pre>#{h e.message.split("\n").first}</pre>"
+    end
+    erb "thanks"
+  end
+
   put "/guests/:id" do |id|
     guest = guest_hash_from_params(params)
-    p DB[:guests].where(id: id).update(guest)
+    begin
+      DB[:guests].where(id: id).update(guest)
+    rescue => e
+      return erb "Couldn't create guest<br><pre>#{h e.message.split("\n").first}</pre>"
+    end
     erb "Updated"
   end
 
@@ -89,18 +101,18 @@ class App < Sinatra::Application
     @overview = DB[<<-SQL].all
       select
         v::date as visiting_on,
-        count(visiting_on) as total,
+        count(visiting_range) as total,
         count(nullif(lunch, false)) as lunch
       from generate_series(
            now() AT TIME ZONE 'America/Los_Angeles',
            now() + '2 weeks'::interval, '1 day') as v
-      left outer join guests on v::date = visiting_on::date
+      left outer join guests on v::date <@ visiting_range
       group by 1
       order by 1 asc;
     SQL
 
     @day = params[:day] || Date.today.to_s
-    @day_guests = DB['select * from guests where ?::date = visiting_on::date', @day].all
+    @day_guests = DB['select * from guests where ?::date <@ visiting_range', @day].all
 
     erb :list
   end

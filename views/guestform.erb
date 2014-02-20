@@ -1,8 +1,19 @@
   <fieldset>
-    <label>Guest's Name*</label> <input <%= name_value(:guest_name) %> required> <br>
-    <label>Visiting on*</label>  <input type='date' <%= name_value :visiting_on, :date %> placeholder="<%=Date.today.to_s%>" required><br>
-    <label>Lunch?</label>        <input type='checkbox' <%= name_value :lunch, :checkbox %>> (please give at least 2 days notice)<br>
-    <label>NDA?</label>          <input type='checkbox' <%= name_value :nda, :checkbox %>>
+    <label>Guest's Name*</label>
+      <input <%= name_value(:guest_name) %> required>
+      <br>
+
+    <label>Visiting on*</label>
+      <input type='date' <%= name_value :visiting_on, :date %> placeholder="<%=Date.today.to_s%>" required>
+      <label class='mid'>, optionally until</label>
+      <input type='date' <%= name_value :visiting_until, :date %> placeholder="<%=Date.today.to_s%>">
+      <br>
+
+    <label>Lunch?</label>
+      <input type='checkbox' <%= name_value :lunch, :checkbox %>> (please give at least 2 days notice)<br>
+
+    <label>NDA?</label>
+      <input type='checkbox' <%= name_value :nda, :checkbox %>>
   </fieldset>
   <fieldset>
    <label>Your Name*</label>     <input <%= name_value :herokai_name %> required><br>

@@ -13,3 +13,10 @@ create table guests (
   created_at       timestamptz   default now()
 );
 
+
+ begin;
+ alter table guests add column visiting_range daterange;
+ update guests set visiting_range = daterange(visiting_on::date, visiting_on::date, '[]');
+ alter table guests drop column visiting_on ;
+ alter table guests alter column visiting_range set not null;
+ commit;
