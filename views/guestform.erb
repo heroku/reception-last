@@ -1,6 +1,11 @@
   <fieldset>
     <label>Guest's Name*</label>
-      <input <%= name_value(:guest_name) %> required>
+      <% if @guest.nil? %>
+        <input name="guest_names[]" required>
+        <button id="addRow">+</button>
+      <% else %>
+        <input <%= name_value(:guest_name) %> required>
+      <% end %>
       <br>
 
     <label>Visiting on*</label>

@@ -15,4 +15,11 @@ form.addEventListener("submit", function(e) {
   localStorage.setItem("notify_gchat",   form.elements["notify_gchat"].checked)
   localStorage.setItem("notify_hipchat", form.elements["notify_hipchat"].checked)
 }, false);
+
+if (addRowButton = document.getElementById('addRow')) {
+  addRowButton.addEventListener("click", function(e) {
+    addRowButton.insertAdjacentHTML('beforebegin', "<br><label>Guest's Name</label><input name='guest_names[]'>")
+    e.preventDefault();
+  }, false);
+}
 </script>

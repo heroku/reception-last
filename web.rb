@@ -73,9 +73,11 @@ class App < Sinatra::Application
   end
 
   post '/guests' do
-    guest = guest_hash_from_params(params)
     begin
-      record = DB[:guests] << guest
+      params['guest_names'].reject{|g| g.empty?}.each do |guest_name|
+        params['guest_name'] = guest_name
+        record = DB[:guests] << guest_hash_from_params(params)
+      end
     rescue => e
       return erb "Couldn't create guest<br><pre>#{h e.message.split("\n").first}</pre>"
     end
