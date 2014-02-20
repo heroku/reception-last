@@ -1,4 +1,18 @@
 <h1>New Guest</h1>
-<form action="/guests" method="post">
+<form id="newguest" action="/guests" method="post">
   <%= erb :guestform %>
 </form>
+<script>
+var form = document.getElementById('newguest');
+var toSave = ["herokai_name", "notify_hipchat", "notify_gchat"];
+
+form.elements["herokai_name"].value = localStorage.getItem("herokai_name")
+form.elements["notify_gchat"].checked   = (localStorage.getItem("notify_gchat")   === "true")
+form.elements["notify_hipchat"].checked = (localStorage.getItem("notify_hipchat") === "true")
+
+form.addEventListener("submit", function(e) {
+  localStorage.setItem("herokai_name",   form.elements["herokai_name"].value)
+  localStorage.setItem("notify_gchat",   form.elements["notify_gchat"].checked)
+  localStorage.setItem("notify_hipchat", form.elements["notify_hipchat"].checked)
+}, false);
+</script>
