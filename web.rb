@@ -118,5 +118,31 @@ class App < Sinatra::Application
 
     erb :list
   end
+
+  get "/stats" do
+    @stats = DB[<<-SQL].all
+      with counts_by_day as (
+        select
+        v::date as visiting_on,
+          count(visiting_range) as total,
+          count(nullif(lunch, false)) as lunch
+        from generate_series(
+          '2013-09-01',
+          date_trunc('month', now()) + '3 months - 1 day'::interval,
+          '1 day') as v
+        left outer join guests on v::date <@ visiting_range
+        group by 1
+      )
+
+      select
+        to_char(date_trunc('month', visiting_on), 'Month YYYY') as month,
+        sum(total) as total,
+        sum(lunch) as lunch
+      from counts_by_day
+      group by date_trunc('month', visiting_on)
+      order by date_trunc('month', visiting_on) asc;
+    SQL
+    erb :stats
+  end
 end
 

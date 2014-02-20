@@ -1,0 +1,10 @@
+<table>
+<tr><th>Month</th><th>Total</th><th>Lunch</th></tr>
+<% @stats.each do |row| %>
+<tr>
+  <td><pre><%=h row[:month] %></pre></td>
+  <td><%=h row[:total].to_i %></td>
+  <td class="last"><%=h row[:lunch].to_i %></td>
+</tr>
+<% end %>
+</table>
