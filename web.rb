@@ -8,7 +8,7 @@ class App < Sinatra::Application
   before do
     unless DISABLE_AUTH
       email = request.env['bouncer.email']
-      halt(403) unless email && email =~ /@(heroku|salesforce|exacttarget).com\z/
+      halt(403) unless email && email =~ /@(heroku|salesforce|exacttarget)\.com\z/
     end
 
     proto = request.env["HTTP_X_FORWARDED_PROTO"]
