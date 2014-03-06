@@ -1,0 +1,36 @@
+body {
+  background-color: #F2F2F2;
+  color: #1A1A1A;
+  font-family: monospace;
+}
+
+label {
+  display: inline-block;
+  width: 9em;
+
+  &.mid {
+    width: auto;
+  }
+}
+
+td {
+  border-right: 1px solid grey;
+  padding: 0 1em;
+
+  &.last {
+    border-right: 0;
+  }
+}
+
+.submit {
+  background: #B4D7BF;
+  font-weight: bold;
+}
+
+.delete {
+  background: #F08080;
+}
+
+small {
+  color: #404040;
+}
