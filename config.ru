@@ -8,7 +8,10 @@ DISABLE_AUTH = ENV['WOAH_DISABLE_AUTH_OMG']
 map '/assets' do
   environment = Sprockets::Environment.new
 
+  environment.append_path 'assets/images'
+  environment.append_path 'assets/javascripts'
   environment.append_path 'assets/stylesheets'
+
   run environment
 end
 
