@@ -14,9 +14,9 @@ class App < Sinatra::Application
     proto = request.env["HTTP_X_FORWARDED_PROTO"]
     host  = request.env["HTTP_HOST"]
     uri   = request.env["REQUEST_URI"]
-    # if settings.production? && (proto != "https" || (host != "reception.heroku.com")
-    #   redirect "https://reception.heroku.com#{uri}"
-    # end
+    if settings.production? && (proto != "https" || (host != "reception.heroku.com")
+      redirect "https://reception.heroku.com#{uri}"
+    end
   end
 
   helpers do
