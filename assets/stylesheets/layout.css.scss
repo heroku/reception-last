@@ -1,7 +1,55 @@
+$base-color: #45454E;
+
+section, nav {
+  padding: 20px 40px;
+}
+
 body {
-  background-color: #F2F2F2;
-  color: #1A1A1A;
-  font-family: monospace;
+  color: $base-color;
+  font: 400 14px/28px "BentonSans", Helvetica, sans-serif;
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+}
+
+form {
+  fieldset {
+    border-bottom: 1px solid #CCC;
+    padding: 20px 0;
+
+    &:first-child {
+      padding-top: 0;
+    }
+  }
+
+  input {
+    border: 1px solid $base-color;
+    border-radius: 3px;
+    font: 400 14px "BentonSans", Helvetica, sans-serif;
+    height: 40px;
+    padding: 0 10px;
+  }
+}
+
+nav {
+  background-color: #3B2F63;
+  background-repeat: no-repeat;
+  font-size: 16px;
+  $spacing: 20px;
+
+  a {
+    color: white;
+    margin-right: $spacing;
+
+    &::after {
+      padding-left: $spacing;
+      content: '|';
+    }
+
+    &:last-child::after {
+      content: '';
+    }
+  }
 }
 
 label {
@@ -23,8 +71,16 @@ td {
 }
 
 .submit {
-  background: #B4D7BF;
-  font-weight: bold;
+  border: none;
+  background: #6e5baa;
+  padding: 8px 24px;
+  border-radius: 3px;
+  color: white;
+  font-size: 18px;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .delete {
