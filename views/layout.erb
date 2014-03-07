@@ -1,22 +1,19 @@
 <html>
 <head>
   <title>heroku guests</title>
-  <style>
-    body { font-family: monospace; background-color: #F2F2F2; color: #1A1A1A }
-    label { display: inline-block; width: 9em;}
-    label.mid { width: auto;}
-    td { border-right: 1px solid grey; padding: 0 1em; }
-    td.last { border-right: 0 }
-    .submit { background: #B4D7BF; font-weight: bold; }
-    .delete { background: #F08080; }
-    small { color: #404040; }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="/assets/application.css" />
+  <script src="/assets/application.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
 </head>
 <body>
-<a href="/">new guest</a> | <a href='/list'>guest list</a> | <a href='/stats'>stats</a><br>
-<%= yield %>
+  <nav>
+    <a href="/">new guest</a>
+    <a href='/list'>guest list</a>
+    <a href='/stats'>stats</a>
+  </nav>
+  <section>
+    <%= yield %>
+  </section>
 </body>
 </html>
-
-

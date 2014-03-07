@@ -1,11 +1,11 @@
-<h1>Edit Guest</h1>
+<h1>Edit Guest
+  <form action="/guests/<%= @guest[:id] %>" method="post" class="delete-guest">
+    <input type='hidden' name='_method' value='delete'>
+    <input type='submit' value='Delete guest' class='button delete'>
+  </form>
+</h1>
 <form action="/guests/<%= @guest[:id] %>" method="post">
   <input type='hidden' name='_method' value='put'>
   <%= erb :guestform %>
 </form>
 
-<h2>Delete Guest</h2>
-<form action="/guests/<%= @guest[:id] %>" method="post">
-  <input type='hidden' name='_method' value='delete'>
-  <input type='submit' value='delete guest' class='delete'>
-<form>

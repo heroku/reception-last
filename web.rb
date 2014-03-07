@@ -146,4 +146,3 @@ class App < Sinatra::Application
     erb :stats
   end
 end
-
