@@ -4,6 +4,11 @@ section, nav {
   padding: 20px 40px;
 }
 
+.field {
+  display: inline-block;
+  padding: 5px;
+}
+
 body {
   color: $base-color;
   font: 400 14px/28px "BentonSans", Helvetica, sans-serif;
@@ -13,6 +18,8 @@ body {
 }
 
 form {
+  margin-bottom: 0;
+
   fieldset {
     border-bottom: 1px solid #CCC;
     padding: 20px 0;
@@ -22,12 +29,17 @@ form {
     }
   }
 
-  input {
-    border: 1px solid $base-color;
+  input:not([type='checkbox']), textarea {
+    border: 1px solid #CBCBCC;
     border-radius: 3px;
-    font: 400 14px "BentonSans", Helvetica, sans-serif;
+    font: 400 14px/17px "BentonSans", Helvetica, sans-serif;
     height: 40px;
-    padding: 0 10px;
+    padding: 10px;
+  }
+
+  textarea {
+    height: 100px;
+    width: 400px;
   }
 }
 
@@ -53,8 +65,8 @@ nav {
 }
 
 label {
-  display: inline-block;
-  width: 9em;
+  display: block;
+  width: 100%;
 
   &.mid {
     width: auto;
@@ -70,23 +82,51 @@ td {
   }
 }
 
-.submit {
+.button {
   border: none;
   background: #6e5baa;
   padding: 8px 24px;
   border-radius: 3px;
   color: white;
-  font-size: 18px;
+  font-size: 14px;
+
+  &.submit {
+    margin-top: 20px;
+    width: 400px;
+  }
+
+  &:focus {
+    outline: none;
+  }
 
   &:hover {
     cursor: pointer;
   }
 }
 
-.delete {
-  background: #F08080;
+form.delete-guest {
+  display: inline-block;
+
+  .button {
+    border: none;
+    background: none;
+    color: #E65252;
+    height: auto;
+    text-decoration: underline;
+    padding: 0;
+    margin-left: 10px;
+  }
 }
 
 small {
   color: #404040;
+}
+
+input[type="checkbox"] {
+  display: inline-block;
+}
+
+input[type="checkbox"] + label {
+  display: inline-block;
+  width: auto;
 }
