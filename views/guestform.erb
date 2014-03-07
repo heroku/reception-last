@@ -1,33 +1,56 @@
-  <fieldset>
-    <label>Guest's Name*</label>
+<fieldset>
+  <div class="row">
+    <div class="field guest-name">
+      <label>Guest's Name*</label>
       <% if @guest.nil? %>
         <input name="guest_names[]" required>
-        <button id="addRow">+</button>
       <% else %>
         <input <%= name_value(:guest_name) %> required>
       <% end %>
-      <br>
-
-    <label>Visiting on*</label>
+    </div>
+    <% if @guest.nil? %>
+      <button class="button" id="addRow">Add new guest</button>
+    <% end %>
+  </div>
+  <div class="row">
+    <div class="field">
+      <label>Visiting on*</label>
       <input type='date' <%= name_value :visiting_on, :date %> placeholder="<%=Date.today.to_s%>" required>
+    </div>
+    <div class="field">
       <label class='mid'>, optionally until</label>
       <input type='date' <%= name_value :visiting_until, :date %> placeholder="<%=Date.today.to_s%>">
-      <br>
-
-    <label>Lunch?</label>
-      <input type='checkbox' <%= name_value :lunch, :checkbox %>> (please give at least 2 days notice)<br>
-
-    <label>NDA?</label>
-      <input type='checkbox' <%= name_value :nda, :checkbox %>>
-  </fieldset>
-  <fieldset>
-   <label>Your Name*</label>     <input <%= name_value :herokai_name %> required><br>
-   <label>Notify Hipchat</label> <input type='checkbox' <%= name_value :notify_hipchat, :checkbox %>><br>
-   <label>Notify GChat</label>   <input type='checkbox' <%= name_value :notify_gchat, :checkbox %>><br>
-  </fieldset>
-  <fieldset>
-    <label>notes:</label><br>
-    <textarea name="notes"><%=h @guest[:notes] if @guest%></textarea><br>
-    <input type="submit" class='submit'>
-  </fieldset>
-
+    </div>
+  </div>
+  <div class="row">
+    <div class="field">
+      <input id="lunch" type='checkbox' <%= name_value :lunch, :checkbox %>>
+      <label for="lunch">Lunch? <em>(please give at least 2 days notice)</em></label>
+    </div>
+    <div class="field">
+      <input id="nda" type='checkbox' <%= name_value :nda, :checkbox %>>
+      <label for="nda">NDA?</label>
+    </div>
+  </div>
+</fieldset>
+<fieldset>
+  <div class="field">
+    <label>Your Name*</label>
+    <input <%= name_value :herokai_name %> required>
+  </div>
+  <div class="field">
+    <input type='checkbox' <%= name_value :notify_hipchat, :checkbox %>>
+    <label>Notify Hipchat</label>
+  </div>
+  <div class="field">
+    <input type='checkbox' <%= name_value :notify_gchat, :checkbox %>>
+    <label>Notify GChat</label>
+  </div>
+</fieldset>
+<fieldset>
+  <div class="field">
+    <label>Notes:</label>
+    <textarea name="notes"><%=h @guest[:notes] if @guest%></textarea>
+  </div>
+</fieldset>
+<input type="submit" class='submit button' value="Notify">
