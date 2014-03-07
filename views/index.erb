@@ -18,7 +18,7 @@ form.addEventListener("submit", function(e) {
 
 if (addRowButton = document.getElementById('addRow')) {
   addRowButton.addEventListener("click", function(e) {
-    addRowButton.insertAdjacentHTML('beforebegin', "<br><label>Guest's Name</label><input name='guest_names[]'>")
+    addRowButton.insertAdjacentHTML('beforebegin', document.getElementsByClassName('guest-name')[0].outerHTML)
     e.preventDefault();
   }, false);
 }
