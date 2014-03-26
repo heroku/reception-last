@@ -132,6 +132,7 @@ class App < Sinatra::Application
           date_trunc('month', now()) + '3 months - 1 day'::interval,
           '1 day') as v
         left outer join guests on v::date <@ visiting_range
+        where extract(isodow from v) < 6 -- only Monday-Friday
         group by 1
       )
 
