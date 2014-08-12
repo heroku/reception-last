@@ -115,7 +115,7 @@ class App < Sinatra::Application
     SQL
 
     @day = params[:day] || Date.today.to_s
-    @day_guests = DB['select * from guests where ?::date <@ visiting_range', @day].all
+    @day_guests = DB['select * from guests where ?::date <@ visiting_range order by guest_name', @day].all
 
     erb :list
   end
