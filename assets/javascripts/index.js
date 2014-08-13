@@ -19,5 +19,19 @@ if (window.location.pathname == "/") {
         e.preventDefault();
       }, false);
     }
+
+    if (removeRowButton = document.getElementById('removeRow')) {
+      removeRowButton.addEventListener("click", function(e) {
+        var elems = document.getElementsByClassName('guest-name')
+        var idx = elems.length - 1
+        if (idx > 0) {
+          var elem = elems[idx]
+          elem.parentNode.removeChild(elem);
+        }
+        e.preventDefault();
+      }, false);
+    }
+
+
   });
 }
