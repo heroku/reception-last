@@ -10,7 +10,8 @@ create table guests (
   notify_sms       text                          ,
   notes            text                          ,
   created_at       timestamptz   default now()   ,
-  visiting_range   daterange     not null
+  visiting_range   daterange     not null        ,
+  arrived_at       timestamptz
 );
 
 create index visitng_range_gist on guests using gist(visiting_range);

@@ -11,10 +11,31 @@
 
 <h1><%=h @day %></h1>
 <table>
-<tr><th>guest</th><th>lunch/nda</th><th>for</th><th>notify</th><th>added</th><th>notes</th></tr>
+  <tr>
+    <th>guest</th>
+    <th>arrived</th>
+    <th>lunch/nda</th>
+    <th>for</th>
+    <th>notify</th>
+    <th>added</th>
+    <th>notes</th>
+</tr>
 <% @day_guests.each do |g| %>
   <tr>
     <td><a href="/guests/<%= g[:id] %>"><%=h g[:guest_name] %></a></td>
+
+    <% if g[:arrived_at] %>
+      <td class='date' title="<%=h g[:arrived_at] %>">
+        <%=h g[:arrived_at] %>
+      </td>
+    <% else %>
+    <td>
+      <form action="/guests/<%= g[:id] %>/check_in" method='post'>
+        <input type='submit' value='check in'>
+      </form>
+    </td>
+    <% end %>
+
     <td> <%= "lunch" if g[:lunch] %> <%= "nda" if g[:nda] %></td>
     <td><%=h g[:herokai_name] %></td>
     <td>
@@ -25,6 +46,8 @@
     <td class='date' title="<%=h g[:created_at] %>">
       <%=h g[:created_at] %>
     </td>
+
+
     <td class='last'><%=h g[:notes] %></td>
   </tr>
 <% end %>

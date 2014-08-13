@@ -77,7 +77,7 @@ class App < Sinatra::Application
     begin
       params['guest_names'].reject{|g| g.empty?}.each do |guest_name|
         params['guest_name'] = guest_name
-        record = DB[:guests] << guest_hash_from_params(params)
+        DB[:guests] << guest_hash_from_params(params)
       end
     rescue => e
       return erb "Couldn't create guest<br><pre>#{h e.message.split("\n").first}</pre>"
@@ -93,6 +93,15 @@ class App < Sinatra::Application
       return erb "Couldn't create guest<br><pre>#{h e.message.split("\n").first}</pre>"
     end
     erb "Updated"
+  end
+
+  post "/guests/:id/check_in" do |id|
+    begin
+      DB[:guests].where(id: id).update(arrived_at: Sequel.function(:now))
+    rescue => e
+      return erb "Couldn't check in guest<br><pre>#{h e.message.split("\n").first}</pre>"
+    end
+    redirect '/list'
   end
 
   delete "/guests/:id" do |id|
@@ -115,7 +124,11 @@ class App < Sinatra::Application
     SQL
 
     @day = params[:day] || Date.today.to_s
-    @day_guests = DB['select * from guests where ?::date <@ visiting_range order by guest_name', @day].all
+    @day_guests = DB[<<-SQL, @day].all
+      select * from guests
+      where ?::date <@ visiting_range
+      order by (arrived_at is not null), guest_name
+      SQL
 
     erb :list
   end
