@@ -46,9 +46,6 @@ GEM
     raindrops (0.12.0)
     sass (3.2.14)
     sequel (4.3.0)
-    sequel_pg (1.6.10)
-      pg (>= 0.8.0)
-      sequel (>= 3.39.0)
     sinatra (1.4.4)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -75,7 +72,6 @@ DEPENDENCIES
   pg
   sass
   sequel
-  sequel_pg
   sinatra
   sprockets
   sprockets-sass
