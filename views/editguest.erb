@@ -1,8 +1,14 @@
 <h1>Edit Guest
   <form action="/guests/<%= @guest[:id] %>" method="post" class="delete-guest">
     <input type='hidden' name='_method' value='delete'>
-    <input type='submit' value='Delete guest' class='button delete'>
+    <input type='submit' value='Delete Guest' class='button delete'>
   </form>
+  <% if @guest[:arrived_at] %>
+    <form action="/guests/<%= @guest[:id] %>/check_in" method="post" class="delete-guest">
+      <input type='hidden' name='_method' value='delete'>
+      <input type='submit' value='Remove Check In' class='button delete'>
+    </form>
+  <% end %>
 </h1>
 <form action="/guests/<%= @guest[:id] %>" method="post">
   <input type='hidden' name='_method' value='put'>

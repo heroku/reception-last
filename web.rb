@@ -90,7 +90,7 @@ class App < Sinatra::Application
     begin
       DB[:guests].where(id: id).update(guest)
     rescue => e
-      return erb "Couldn't create guest<br><pre>#{h e.message.split("\n").first}</pre>"
+      return erb "Couldn't create guest <br><pre>#{h e.message.split("\n").first}</pre>"
     end
     erb "Updated"
   end
@@ -99,7 +99,16 @@ class App < Sinatra::Application
     begin
       DB[:guests].where(id: id).update(arrived_at: Sequel.function(:now))
     rescue => e
-      return erb "Couldn't check in guest<br><pre>#{h e.message.split("\n").first}</pre>"
+      return erb "Couldn't check in guest <br><pre>#{h e.message.split("\n").first}</pre>"
+    end
+    redirect '/list'
+  end
+
+  delete "/guests/:id/check_in" do |id|
+    begin
+      DB[:guests].where(id: id).update(arrived_at: nil)
+    rescue => e
+      return erb "Couldn't remove check in <br><pre>#{h e.message.split("\n").first}</pre>"
     end
     redirect '/list'
   end
