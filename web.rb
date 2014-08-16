@@ -66,6 +66,8 @@ class App < Sinatra::Application
       @guest = DB[:guests].where(id: id).first
       @guest[:visiting_on] = @guest[:visiting_range].begin
       @guest[:visiting_until] = @guest[:visiting_range].end - 1 # dateranges come out of the database as [), but we store with []
+
+      @checkins = DB[:checkins].where(guest_id: id)
     rescue
      halt(404)
     end
@@ -97,20 +99,20 @@ class App < Sinatra::Application
 
   post "/guests/:id/check_in" do |id|
     begin
-      DB[:guests].where(id: id).update(arrived_at: Sequel.function(:now))
+      DB[:checkins] << {guest_id: id}
     rescue => e
       return erb "Couldn't check in guest <br><pre>#{h e.message.split("\n").first}</pre>"
     end
     redirect '/list'
   end
 
-  delete "/guests/:id/check_in" do |id|
+  delete "/guests/:gid/checkins/:id" do |gid,id|
     begin
-      DB[:guests].where(id: id).update(arrived_at: nil)
+      p DB[:checkins].where(id: id, guest_id: gid).delete
     rescue => e
       return erb "Couldn't remove check in <br><pre>#{h e.message.split("\n").first}</pre>"
     end
-    redirect '/list'
+    redirect "/guests/#{gid}"
   end
 
   delete "/guests/:id" do |id|
@@ -133,10 +135,12 @@ class App < Sinatra::Application
     SQL
 
     @day = params[:day] || Date.today.to_s
-    @day_guests = DB[<<-SQL, @day].all
-      select * from guests
+    @day_guests = DB[<<-SQL, @day, @day].all
+      select g.*, c.created_at as arrived_at
+      from guests g
+      left join checkins c on g.id=c.guest_id and c.created_at::date = ?::date
       where ?::date <@ visiting_range
-      order by (arrived_at is not null), guest_name
+      order by (c.created_at is not null), guest_name ;
       SQL
 
     erb :list

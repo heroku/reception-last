@@ -1,17 +1,31 @@
-<h1>Edit Guest
+<h1>Checkins</h1>
+<ul>
+  <% @checkins.each do |ci| %>
+    <li>
+      <span class='date'><%= ci[:created_at] %></span>
+      <form action="/guests/<%= ci[:guest_id] %>/checkins/<%= ci[:id] %>" method="post" class="delete-guest">
+        <input type='hidden' name='_method' value='delete'>
+        <input type='submit' value='Delete Checkin' class='button delete'>
+      </form>
+    </li>
+  <% end %>
+</ul>
+
+<h1>Edit Guest</h1>
   <form action="/guests/<%= @guest[:id] %>" method="post" class="delete-guest">
     <input type='hidden' name='_method' value='delete'>
     <input type='submit' value='Delete Guest' class='button delete'>
   </form>
-  <% if @guest[:arrived_at] %>
-    <form action="/guests/<%= @guest[:id] %>/check_in" method="post" class="delete-guest">
-      <input type='hidden' name='_method' value='delete'>
-      <input type='submit' value='Remove Check In' class='button delete'>
-    </form>
-  <% end %>
 </h1>
 <form action="/guests/<%= @guest[:id] %>" method="post">
   <input type='hidden' name='_method' value='put'>
   <%= erb :guestform %>
 </form>
 
+<script>
+  var dates = document.getElementsByClassName('date');
+  for(var i=0; i < dates.length; i++) {
+    var el = dates[i];
+    el.innerText = moment(el.innerText).calendar();
+  }
+</script>
