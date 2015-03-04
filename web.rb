@@ -44,7 +44,7 @@ class App < Sinatra::Application
     erb :index
   end
 
-  FIELDS = %w(guest_name lunch nda herokai_name notify_hipchat notify_gchat notify_sms notes)
+  FIELDS = %w(guest_name lunch nda salesforce herokai_name notify_hipchat notify_gchat notify_sms notes)
   def guest_hash_from_params(params)
     guest = {}
     FIELDS.each {|field| guest[field] = params[field] }

@@ -6,6 +6,7 @@ create table guests (
   herokai_name     text          not null        ,
   lunch            boolean       default false   ,
   nda              boolean       default false   ,
+  salesforce       boolean       default false   ,
   notify_hipchat   boolean       default false   ,
   notify_gchat     boolean       default false   ,
   notify_sms       text                          ,
