@@ -16,7 +16,7 @@
   <tr>
     <th>guest</th>
     <th>arrived</th>
-    <th>lunch/nda</th>
+    <th>lunch</th>
     <th>for</th>
     <th>notify</th>
     <th>added</th>
@@ -38,7 +38,7 @@
     </td>
     <% end %>
 
-    <td> <%= "lunch" if g[:lunch] %> <%= "nda" if g[:nda] %></td>
+    <td> <%= "lunch" if g[:lunch] %> </td>
     <td><%=h g[:herokai_name] %></td>
     <td>
       <%= "hipchat" if g[:notify_hipchat] %>
