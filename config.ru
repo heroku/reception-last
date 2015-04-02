@@ -1,5 +1,7 @@
 require 'bundler'
 Bundler.require
+require 'rack/session/cookie'
+require 'heroku/bouncer'
 
 require './web.rb'
 
@@ -17,6 +19,10 @@ end
 
 
 unless DISABLE_AUTH
-  use Heroku::Bouncer, expose_token: true
+  use Rack::Session::Cookie, secret: ENV.fetch('SECRET'), key: "my_app_session"
+  use Heroku::Bouncer,
+    expose_token: true,
+    oauth: { id: ENV.fetch('HEROKU_OAUTH_ID'), secret: ENV.fetch('HEROKU_OAUTH_SECRET') },
+    secret: ENV.fetch("SECRET")
 end
 run App
