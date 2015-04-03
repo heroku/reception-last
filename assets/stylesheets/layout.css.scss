@@ -140,6 +140,10 @@ input[type="checkbox"] + label {
   font-family: monospace;
 }
 
+.stats th {
+  vertical-align: top;
+}
+
 .stats td {
   text-align: right;
 }
