@@ -1,4 +1,46 @@
+<div class='guest'>
 <h1>New Guest</h1>
-<form id="newguest" action="/guests" method="post">
+<form id="newguest" action="/guests" method="post" >
   <%= erb :guestform %>
 </form>
+</div>
+
+<div class='guest'>
+<h1>Heroku/SFDC Employee Visit</h1>
+  <form id="newemployee" action="/guests" method="post">
+  <fieldset>
+    <div class="row">
+      <div class="field guest-name">
+        <label>Your Name*</label>
+        <input id='employee_name' name="guest_names[]" required>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label>Visiting on*</label>
+        <input type='date' <%= name_value :visiting_on, :date %> placeholder="<%=Date.today.to_s%>" required>
+      </div>
+      <div class="field">
+        <label class='mid'>, optionally until</label>
+        <input type='date' <%= name_value :visiting_until, :date %> placeholder="<%=Date.today.to_s%>">
+      </div>
+    </div>
+    <div class="row">
+      <div class="field">
+        <input id="lunch" type='checkbox' <%= name_value :lunch, :checkbox %>>
+        <label for="lunch">Lunch? <em>(please give at least 2 days notice)</em></label>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset>
+    <div class="field">
+      <label>Your Team/Department:</label>
+      <textarea name="notes"><%=h @guest[:notes] if @guest%></textarea>
+    </div>
+  </fieldset>
+  <input type="hidden" name='salesforce' value='true'>
+  <input type="hidden" name='herokai_name' value='Heroku/SFDC Employee'>
+  <input type="submit" class='submit button' value="Submit">
+</form>
+</div>
+

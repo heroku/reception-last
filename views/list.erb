@@ -39,11 +39,12 @@
     <% end %>
 
     <td> <%= "lunch" if g[:lunch] %> </td>
-    <td><%=h g[:herokai_name] %></td>
+    <td>
+      <%=h g[:herokai_name] %>
+    </td>
     <td>
       <%= "hipchat" if g[:notify_hipchat] %>
       <%= "gchat" if g[:notify_gchat] %>
-      <%= "sms #{h g[:notify_sms]}" if g[:notify_sms] && ! g[:notify_sms].empty? %>
     </td>
     <td class='date' title="<%=h g[:created_at] %>">
       <%=h g[:created_at] %>
