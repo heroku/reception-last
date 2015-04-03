@@ -1,14 +1,23 @@
 <table>
-<tr><th>Month</th><th>Total</th><th>Lunch</th></tr>
+  <tr>
+    <th>Month</th>
+    <th>Total</th>
+    <th>Total Lunch</th>
+    <th>Checkins</th>
+    <th>Checkins Lunch</th>
+  </tr>
 <% @stats.each do |row| %>
 <tr>
   <td><pre><%=h row[:month] %></pre></td>
   <td><%=h row[:total].to_i %></td>
-  <td class="last"><%=h row[:lunch].to_i %></td>
+  <td ><%=h row[:lunch].to_i %></td>
+  <td ><%=h row[:checkins].to_i %></td>
+  <td class="last"><%=h row[:checkinslunch].to_i %></td>
 </tr>
 <% end %>
 </table>
 
 <p><ul>
   <li>new 2014-03-26: guests that span weekends are no longer counted here</li>
+  <li>new 2015-04-02: two new columns for guests that have been checked in</li>
 </ul></p>

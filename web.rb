@@ -154,7 +154,7 @@ with counts_by_day as (
       count(visiting_range) as total,
       count(nullif(lunch, false)) as lunch,
       count(checkins.id) as checkins,
-      count(nullif(lunch and checkins.id is not null, false) ) as checklunch
+      count(nullif(lunch and checkins.id is not null, false) ) as checkinslunch
     from generate_series(
       '2013-09-01',
       date_trunc('month', now()) + '3 months - 1 day'::interval,
@@ -166,10 +166,10 @@ with counts_by_day as (
   )
   select
     to_char(date_trunc('month', visiting_on), 'Month YYYY') as month,
-    sum(total) as "total lunch",
+    sum(total) as total,
     sum(lunch) as lunch,
     sum(checkins) as checkins,
-    sum(checklunch) as "checkins lunch"
+    sum(checkinslunch) as checkinslunch
   from counts_by_day
   group by date_trunc('month', visiting_on)
   order by date_trunc('month', visiting_on) asc;
