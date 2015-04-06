@@ -28,7 +28,7 @@ if (window.location.pathname == "/") {
 
     if (removeRowButton = document.getElementById('removeRow')) {
       removeRowButton.addEventListener("click", function(e) {
-        var elems = document.getElementsByClassName('guest-name')
+        var elems = removeRowButton.parentElement.getElementsByClassName('guest-name')
         var idx = elems.length - 1
         if (idx > 0) {
           var elem = elems[idx]
