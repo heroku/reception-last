@@ -22,3 +22,4 @@ create table checkins (
   created_at timestamptz not null default now()
 );
 create index on checkins(guest_id);
+create unique index on checkins (guest_id, date_trunc('day', created_at at time zone 'UTC'));
