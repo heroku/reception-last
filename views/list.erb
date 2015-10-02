@@ -3,7 +3,7 @@
   <% @overview.each do |day| %>
     <%= "<b><a href='?day=#{day[:visiting_on]}'>#{day[:visiting_on].strftime('%a %b %d')}</a>:</b>" %>
     <% if day[:total] > 0 %>
-      <%= "#{day[:total].to_s.rjust(2, ' ')} visiting (#{day[:lunch].to_s.rjust(2, ' ')} for lunch)" %>
+      <%= "#{day[:total].to_s.rjust(2, ' ')} visiting, #{day[:lunch].to_s.rjust(2, ' ')} for lunch" %>
     <% else %>
       <%= "<small>nobody</small>" %>
     <% end %>
