@@ -124,10 +124,10 @@ class App < Sinatra::Application
     @overview = DB[<<-SQL].all
       select
         v::date as visiting_on,
-        count(visiting_range) as total,
+        count(visiting_range)       as total,
         count(nullif(lunch, false)) as lunch
       from generate_series(
-           now() AT TIME ZONE 'America/Los_Angeles',
+           now() AT TIME ZONE 'America/Los_Angeles' - '2 days'::interval,
            now() + '2 weeks'::interval, '1 day') as v
       left outer join guests on v::date <@ visiting_range
       group by 1
