@@ -134,7 +134,7 @@ class App < Sinatra::Application
       order by 1 asc;
     SQL
 
-    @day = params[:day] || Date.today.to_s
+    @day = params[:day] || Sequel.lit("(now() AT TIME ZONE 'America/Los_Angeles')")
     @day_guests = DB[<<-SQL, @day, @day].all
       select g.*, c.created_at as arrived_at
       from guests g
