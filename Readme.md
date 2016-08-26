@@ -1,3 +1,7 @@
+# DEPRECATED
+
+## Please see [the new reception repo](https://github.com/heroku/reception) for the current version.
+
 # Reception
 
 A simple guest tracking app for vibe.
